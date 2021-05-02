@@ -1,0 +1,262 @@
+#:import Factory kivy.factory.Factory
+
+BoxLayout:
+    orientation: 'vertical'
+
+
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Upper_bar:
+        canvas.before:
+            Color:
+                rgba: (.886,945,1, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        size_hint: (1, 0.1)
+        orientation: 'horizontal'
+        Image:
+            size_hint: (0.2, 1)
+            source: './Hunow_logo.png'
+            size: self.size
+
+        Label:
+
+        Button:
+            background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+            canvas.before:
+                Color:
+                    rgba: (.6,.8509,.9176,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: (0.15, 1)
+            text: '만든이'
+            on_press: Factory.CreditPop().open()
+
+
+
+    Label:
+        size_hint: (1, 0.01)
+
+    Upper_bar:
+        size_hint: (1, 0.8)
+        MyCamera:
+            id: camera
+
+    Middle_bar:
+        spacing: 8
+        padding: 8
+        size_hint: (1, 0.1)
+        Button:
+            background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+            canvas.before:
+                Color:
+                    rgba: (.8,.6,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [18,]
+            text: '저장 위치'
+            font_size : 20
+            on_press: Factory.LocationPop().open()
+
+        Button:
+            background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+            canvas.before:
+                Color:
+                    rgba: (.8,.6,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [18,]
+            text: 'Save'
+            font_size : 20
+
+            on_release:
+                app.printOpenImage()
+                app.imageSave()
+
+            text: '저장'
+            font_size : 20
+
+
+    ScrollView:
+        size_hint: (1, 0.1)
+        do_scroll_x: True
+        do_scroll_y: False
+
+        Under_bar:
+            spacing: 8
+            padding: 8
+            size_hint_x: 1.5
+
+
+            ToggleButton:
+                group: 'sticker'
+                id: origin
+                text: "오리지널"
+                font_size : 20
+                background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+                canvas.before:
+                    Color:
+                        rgba: (.6,.8509,.9176,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [18,]
+                on_release:
+                    if self.state == 'normal': self.state = 'down'
+                    app.setStickerImage('none.png')
+
+            ToggleButton:
+                group: 'sticker'
+                id: tear
+                background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+                canvas.before:
+                    Color:
+                        rgba: (.6,.8509,.9176,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [18,]
+
+                text: '눈물'
+                font_size : 20
+                on_release:
+                    if self.state == 'normal': self.state = 'down'
+                    app.setStickerImage('tear.png')
+
+            ToggleButton:
+                group: 'sticker'
+                id: mustache
+                text: "콧수염"
+                font_size : 20
+                background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+                canvas.before:
+                    Color:
+                        rgba: (.6,.8509,.9176,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [18,]
+                on_release:
+                    if self.state == 'normal': self.state = 'down'
+                    app.setStickerImage('suyum.png')
+
+
+            ToggleButton:
+                group: 'sticker'
+                id: sunglass
+                text: "선글라스"
+                font_size : 20
+                background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+                canvas.before:
+                    Color:
+                        rgba: (.6,.8509,.9176,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [18,]
+                on_release:
+                    if self.state == 'normal': self.state = 'down'
+                    app.setStickerImage('sunglass.png')
+
+            ToggleButton:
+                group: 'sticker'
+                id: strawberry
+                text: "딸기"
+                font_size : 20
+                background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+                canvas.before:
+                    Color:
+                        rgba: (.6,.8509,.9176,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [18,]
+                on_release:
+                    if self.state == 'normal': self.state = 'down'
+                    app.setStickerImage('berry.png')
+
+            ToggleButton:
+                group: 'sticker'
+                id: doggy
+                text: "강아지"
+                font_size : 20
+                background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+                canvas.before:
+                    Color:
+                        rgba: (.6,.8509,.9176,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [18,]
+                on_release:
+                    if self.state == 'normal': self.state = 'down'
+                    app.setStickerImage('dog.png')
+
+
+
+
+
+<CreditPop@Popup>:
+    size_hint: (0.5, 0.5)
+    auto_dismiss: False
+    title: '만든이'
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: 'vertical'
+
+        Label:
+            text:
+                '가나다 순\n김태현\n노재화\n박성수\n+김민석'
+
+
+        Button:
+            padding: (4, 4)
+            size_hint: (1, 0.2)
+            text: '확인'
+            on_release: root.dismiss()
+
+
+
+
+<LocationPop@Popup>:
+    size_hint: (0.9, 0.9)
+    auto_dismiss: False
+    title: '저장 위치 선택'
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: 'vertical'
+
+        FileChooserIconView:
+
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                on_release:
+                    app.Save_path = filechooser.path
+                    print(app.Save_path)
+                    root.dismiss()
+
+                text: '선택'
+
+            Label:
+
+            Button:
+                text: 'Cancel'
+                on_release: root.dismiss()
