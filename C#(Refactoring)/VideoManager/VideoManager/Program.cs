@@ -60,20 +60,44 @@ namespace VideoManager
 
     class VideoGubunInputBase
     {
-        private List<VideoGubun> m_VideoGubunList = new List<VideoGubun>();
+        protected List<VideoGubun> m_VideoGubunList = new List<VideoGubun>();
 
         public VideoGubunInputBase() // 생성자
         {
-            m_VideoGubunList.Add(new NewVideo());
             m_VideoGubunList.Add(new NormalVideo());
+            m_VideoGubunList.Add(new NewVideo());
             m_VideoGubunList.Add(new OldVideo());
         }
 
+        public virtual void DisplayMenu() { }
+
         public VideoGubun GetVideoGubun()
         {
-            Console.Write("1. 신규비디오, 2.일반비디오, 3.구비디오: ");
+            DisplayMenu();
             int iVideoGubun = int.Parse(Console.ReadLine());
             return m_VideoGubunList[iVideoGubun - 1]; // list의 index는 0부터 시작하므로 -1 해줌
+        }
+    }
+
+    class VideoGubunInputRow : VideoGubunInputBase
+    {
+        public override void DisplayMenu()
+        {
+            for(int i=0; i<m_VideoGubunList.Count; i++)
+            {
+                Console.WriteLine("{0}.{1}", i + 1, m_VideoGubunList[i].GetVideoGubun());
+            }
+        }
+    }
+
+    class VideoGubunInputCol: VideoGubunInputBase
+    {
+        public override void DisplayMenu()
+        {
+            for (int i = 0; i < m_VideoGubunList.Count; i++)
+            {
+                Console.Write("{0}.{1} ", i + 1, m_VideoGubunList[i].GetVideoGubun());
+            }
         }
     }
 
@@ -110,7 +134,7 @@ namespace VideoManager
         static void Main(string[] args)
         {
             Video v = new Video();
-            VideoGubunInputBase vInput = new VideoGubunInputBase();
+            VideoGubunInputBase vInput = new VideoGubunInputRow();
             v.InputData(vInput);
             v.PrintData();
         }
