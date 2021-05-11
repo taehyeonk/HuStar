@@ -17,6 +17,16 @@ namespace VideoManager
         {
             return 0;
         }
+
+        public virtual VideoGubun Up()
+        {
+            return null;
+        }
+
+        public virtual VideoGubun Down()
+        {
+            return null;
+        }
     }
 
     class NewVideo : VideoGubun
@@ -41,6 +51,16 @@ namespace VideoManager
         public override int GetRentalPrice()
         {
             return 2000;
+        }
+
+        public override VideoGubun Up()
+        {
+            return this;
+        }
+
+        public override VideoGubun Down()
+        {
+            return NormalVideo.CreateVideoGubun();
         }
     }
 
@@ -67,6 +87,16 @@ namespace VideoManager
         {
             return 1000;
         }
+
+        public override VideoGubun Up()
+        {
+            return NewVideo.CreateVideoGubun();
+        }
+
+        public override VideoGubun Down()
+        {
+            return OldVideo.CreateVideoGubun();
+        }
     }
 
     class OldVideo : VideoGubun
@@ -91,6 +121,16 @@ namespace VideoManager
         public override int GetRentalPrice()
         {
             return 500;
+        }
+
+        public override VideoGubun Up()
+        {
+            return NormalVideo.CreateVideoGubun();
+        }
+
+        public override VideoGubun Down()
+        {
+            return this;
         }
     }
 
@@ -163,6 +203,16 @@ namespace VideoManager
             Console.WriteLine("비디오 구분: {0}", m_VideoGubun.GetVideoGubun());
             Console.WriteLine("대여료: {0}", m_VideoGubun.GetRentalPrice());
         }
+
+        public void UpVideoGubun()
+        {
+            m_VideoGubun = m_VideoGubun.Up();
+        }
+
+        public void DownVideoGubun()
+        {
+            m_VideoGubun = m_VideoGubun.Down();
+        }
     }
 
     class Program
@@ -172,6 +222,12 @@ namespace VideoManager
             Video v = new Video();
             VideoGubunInputBase vInput = new VideoGubunInputRow();
             v.InputData(vInput);
+            v.PrintData();
+            v.UpVideoGubun();
+            v.PrintData();
+            v.DownVideoGubun();
+            v.PrintData();
+            v.DownVideoGubun();
             v.PrintData();
         }
     }
