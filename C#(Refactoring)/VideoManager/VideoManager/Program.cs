@@ -58,23 +58,22 @@ namespace VideoManager
         }
     }
 
-    class VideoGubunInput // 변화될 가능성이 많은 부분의 코드는 따로 클래스로 만듦
+    class VideoGubunInputBase
     {
+        private List<VideoGubun> m_VideoGubunList = new List<VideoGubun>();
+
+        public VideoGubunInputBase() // 생성자
+        {
+            m_VideoGubunList.Add(new NewVideo());
+            m_VideoGubunList.Add(new NormalVideo());
+            m_VideoGubunList.Add(new OldVideo());
+        }
+
         public VideoGubun GetVideoGubun()
         {
             Console.Write("1. 신규비디오, 2.일반비디오, 3.구비디오: ");
             int iVideoGubun = int.Parse(Console.ReadLine());
-            switch (iVideoGubun)
-            {
-                case 1:
-                    return new NewVideo();
-                case 2:
-                    return new NormalVideo();
-                case 3:
-                    return new OldVideo();
-                default:
-                    return new NewVideo();
-            }
+            return m_VideoGubunList[iVideoGubun - 1]; // list의 index는 0부터 시작하므로 -1 해줌
         }
     }
 
@@ -85,7 +84,7 @@ namespace VideoManager
         private string m_Director;
         private VideoGubun m_VideoGubun;
 
-        public void InputData(VideoGubunInput vInput)
+        public void InputData(VideoGubunInputBase vInput)
         {
             Console.Write("영화제목: ");
             m_Title = Console.ReadLine();
@@ -111,7 +110,7 @@ namespace VideoManager
         static void Main(string[] args)
         {
             Video v = new Video();
-            VideoGubunInput vInput = new VideoGubunInput();
+            VideoGubunInputBase vInput = new VideoGubunInputBase();
             v.InputData(vInput);
             v.PrintData();
         }
