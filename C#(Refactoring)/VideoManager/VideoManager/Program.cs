@@ -6,27 +6,12 @@ using System.Threading.Tasks;
 
 namespace VideoManager
 {
-    class VideoGubun
+    interface VideoGubun // interface = 순수가상함수로만 구성된 class
     {
-        public virtual string GetVideoGubun()
-        {
-            return "";
-        }
-
-        public virtual int GetRentalPrice()
-        {
-            return 0;
-        }
-
-        public virtual VideoGubun Up()
-        {
-            return null;
-        }
-
-        public virtual VideoGubun Down()
-        {
-            return null;
-        }
+        string GetVideoGubun();
+        int GetRentalPrice();
+        VideoGubun Up();
+        VideoGubun Down();
     }
 
     class NewVideo : VideoGubun
@@ -43,22 +28,22 @@ namespace VideoManager
             return m_VideoGubun;
         }
 
-        public override string GetVideoGubun()
+        public string GetVideoGubun()
         {
             return "신규비디오";
         }
 
-        public override int GetRentalPrice()
+        public int GetRentalPrice()
         {
             return 2000;
         }
 
-        public override VideoGubun Up()
+        public VideoGubun Up()
         {
             return this;
         }
 
-        public override VideoGubun Down()
+        public VideoGubun Down()
         {
             return NormalVideo.CreateVideoGubun();
         }
@@ -78,22 +63,22 @@ namespace VideoManager
             return m_VideoGubun;
         }
 
-        public override string GetVideoGubun()
+        public string GetVideoGubun()
         {
             return "일반비디오";
         }
 
-        public override int GetRentalPrice()
+        public int GetRentalPrice()
         {
             return 1000;
         }
 
-        public override VideoGubun Up()
+        public VideoGubun Up()
         {
             return NewVideo.CreateVideoGubun();
         }
 
-        public override VideoGubun Down()
+        public VideoGubun Down()
         {
             return OldVideo.CreateVideoGubun();
         }
@@ -113,22 +98,22 @@ namespace VideoManager
             return m_VideoGubun;
         }
 
-        public override string GetVideoGubun()
+        public string GetVideoGubun()
         {
             return "구비디오";
         }
 
-        public override int GetRentalPrice()
+        public int GetRentalPrice()
         {
             return 500;
         }
 
-        public override VideoGubun Up()
+        public VideoGubun Up()
         {
             return NormalVideo.CreateVideoGubun();
         }
 
-        public override VideoGubun Down()
+        public VideoGubun Down()
         {
             return this;
         }
