@@ -58,6 +58,26 @@ namespace VideoManager
         }
     }
 
+    class VideoGubunInput // 변화될 가능성이 많은 부분의 코드는 따로 클래스로 만듦
+    {
+        public VideoGubun GetVideoGubun()
+        {
+            Console.Write("1. 신규비디오, 2.일반비디오, 3.구비디오: ");
+            int iVideoGubun = int.Parse(Console.ReadLine());
+            switch (iVideoGubun)
+            {
+                case 1:
+                    return new NewVideo();
+                case 2:
+                    return new NormalVideo();
+                case 3:
+                    return new OldVideo();
+                default:
+                    return new NewVideo();
+            }
+        }
+    }
+
     class Video
     {
         private string m_Title;
@@ -65,7 +85,7 @@ namespace VideoManager
         private string m_Director;
         private VideoGubun m_VideoGubun;
 
-        public void InputData()
+        public void InputData(VideoGubunInput vInput)
         {
             Console.Write("영화제목: ");
             m_Title = Console.ReadLine();
@@ -73,23 +93,7 @@ namespace VideoManager
             m_Actor = Console.ReadLine();
             Console.Write("영화감독: ");
             m_Director = Console.ReadLine();
-            Console.Write("1. 신규비디오, 2.일반비디오, 3.구비디오: ");
-            int iVideoGubun = int.Parse(Console.ReadLine());
-            switch (iVideoGubun)
-            {
-                case 1:
-                    m_VideoGubun = new NewVideo();
-                    break;
-                case 2:
-                    m_VideoGubun = new NormalVideo();
-                    break;
-                case 3:
-                    m_VideoGubun = new OldVideo();
-                    break;
-                default:
-                    m_VideoGubun = new NewVideo();
-                    break;
-            }
+            m_VideoGubun = vInput.GetVideoGubun();
         }
 
         public void PrintData()
@@ -107,7 +111,8 @@ namespace VideoManager
         static void Main(string[] args)
         {
             Video v = new Video();
-            v.InputData();
+            VideoGubunInput vInput = new VideoGubunInput();
+            v.InputData(vInput);
             v.PrintData();
         }
     }
