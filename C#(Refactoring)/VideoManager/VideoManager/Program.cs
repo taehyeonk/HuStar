@@ -21,6 +21,18 @@ namespace VideoManager
 
     class NewVideo : VideoGubun
     {
+        private static VideoGubun m_VideoGubun = null;
+        private NewVideo() { }
+
+        public static VideoGubun CreateVideoGubun()
+        {
+            if(m_VideoGubun == null)
+            {
+                m_VideoGubun = new NewVideo();
+            }
+            return m_VideoGubun;
+        }
+
         public override string GetVideoGubun()
         {
             return "신규비디오";
@@ -34,6 +46,18 @@ namespace VideoManager
 
     class NormalVideo : VideoGubun
     {
+        private static VideoGubun m_VideoGubun = null;
+        private NormalVideo() { }
+
+        public static VideoGubun CreateVideoGubun()
+        {
+            if (m_VideoGubun == null)
+            {
+                m_VideoGubun = new NormalVideo();
+            }
+            return m_VideoGubun;
+        }
+
         public override string GetVideoGubun()
         {
             return "일반비디오";
@@ -47,6 +71,18 @@ namespace VideoManager
 
     class OldVideo : VideoGubun
     {
+        private static VideoGubun m_VideoGubun = null;
+        private OldVideo() { }
+
+        public static VideoGubun CreateVideoGubun()
+        {
+            if (m_VideoGubun == null)
+            {
+                m_VideoGubun = new OldVideo();
+            }
+            return m_VideoGubun;
+        }
+
         public override string GetVideoGubun()
         {
             return "구비디오";
@@ -64,9 +100,9 @@ namespace VideoManager
 
         public VideoGubunInputBase() // 생성자
         {
-            m_VideoGubunList.Add(new NormalVideo());
-            m_VideoGubunList.Add(new NewVideo());
-            m_VideoGubunList.Add(new OldVideo());
+            m_VideoGubunList.Add(NormalVideo.CreateVideoGubun());
+            m_VideoGubunList.Add(NewVideo.CreateVideoGubun());
+            m_VideoGubunList.Add(OldVideo.CreateVideoGubun());
         }
 
         public virtual void DisplayMenu() { }
