@@ -6,12 +6,64 @@ using System.Threading.Tasks;
 
 namespace VideoManager
 {
+    class VideoGubun
+    {
+        public virtual string GetVideoGubun()
+        {
+            return "";
+        }
+
+        public virtual int GetRentalPrice()
+        {
+            return 0;
+        }
+    }
+
+    class NewVideo : VideoGubun
+    {
+        public override string GetVideoGubun()
+        {
+            return "신규비디오";
+        }
+
+        public override int GetRentalPrice()
+        {
+            return 2000;
+        }
+    }
+
+    class NormalVideo : VideoGubun
+    {
+        public override string GetVideoGubun()
+        {
+            return "일반비디오";
+        }
+
+        public override int GetRentalPrice()
+        {
+            return 1000;
+        }
+    }
+
+    class OldVideo : VideoGubun
+    {
+        public override string GetVideoGubun()
+        {
+            return "구비디오";
+        }
+
+        public override int GetRentalPrice()
+        {
+            return 500;
+        }
+    }
+
     class Video
     {
         private string m_Title;
         private string m_Actor;
         private string m_Director;
-        private int m_iVideoGubun;
+        private VideoGubun m_VideoGubun;
 
         public void InputData()
         {
@@ -22,7 +74,22 @@ namespace VideoManager
             Console.Write("영화감독: ");
             m_Director = Console.ReadLine();
             Console.Write("1. 신규비디오, 2.일반비디오, 3.구비디오: ");
-            m_iVideoGubun = int.Parse(Console.ReadLine());
+            int iVideoGubun = int.Parse(Console.ReadLine());
+            switch (iVideoGubun)
+            {
+                case 1:
+                    m_VideoGubun = new NewVideo();
+                    break;
+                case 2:
+                    m_VideoGubun = new NormalVideo();
+                    break;
+                case 3:
+                    m_VideoGubun = new OldVideo();
+                    break;
+                default:
+                    m_VideoGubun = new NewVideo();
+                    break;
+            }
         }
 
         public void PrintData()
@@ -30,32 +97,8 @@ namespace VideoManager
             Console.WriteLine("영화제목 : {0}", m_Title);
             Console.WriteLine("주연배우 : {0}", m_Actor);
             Console.WriteLine("영화감독 : {0}", m_Director);
-            Console.Write("비디오 구분: ");
-            switch (m_iVideoGubun)
-            {
-                case 1:
-                    Console.WriteLine("신규비디오");
-                    break;
-                case 2:
-                    Console.WriteLine("일반비디오");
-                    break;
-                case 3:
-                    Console.WriteLine("구비디오");
-                    break;
-            }
-            Console.Write("대여료: ");
-            switch (m_iVideoGubun)
-            {
-                case 1:
-                    Console.WriteLine("2000");
-                    break;
-                case 2:
-                    Console.WriteLine("1000");
-                    break;
-                case 3:
-                    Console.WriteLine("500");
-                    break;
-            }
+            Console.WriteLine("비디오 구분: {0}", m_VideoGubun.GetVideoGubun());
+            Console.WriteLine("대여료: {0}", m_VideoGubun.GetRentalPrice());
         }
     }
 
