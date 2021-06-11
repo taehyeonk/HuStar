@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<script src="https://cdn.rawgit.com/CryptoStore/crypto-js/3.1.2/build/rollups/tripledes.js"></script>
+
+<script>
+function encryptDesCbcPkcs7Padding(message, key) {
+    var keyWords = CryptoJS.enc.Utf8.parse(key);
+    var ivWords = CryptoJS.lib.WordArray.create([0, 0]);
+    var encrypted = CryptoJS.DES.encrypt(message, keyWords, { iv: ivWords});
+  
+    return encrypted;//.toString(CryptoJS.enc.Utf8);
+}
+
+function decryptDesCbcPkcs7Padding(message, key) {
+    var keyWords = CryptoJS.enc.Utf8.parse(key);
+    var ivWords = CryptoJS.lib.WordArray.create([0, 0]);
+
+    var decrypted = CryptoJS.DES.decrypt({ciphertext: message}, keyWords, { iv: ivWords });
+
+    return decrypted.toString(CryptoJS.enc.Utf8);
+}
+
+
+function encrypt() {
+var plainText = "hola";
+console.log("Plain text: ", plainText);
+var base64Coded = window.btoa(plainText);
+console.log("Base64 coded text: ", base64Coded);
+
+var encrypted = encryptDesCbcPkcs7Padding(base64Coded, "12345678");
+console.log("Encrypted: ", encrypted);
+var finalEncrypted = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+console.log("Final encrypted: ", finalEncrypted);
+//alert("Final encrypted: " + finalEncrypted);
+
+document.getElementById("pmessage").textContent = plainText;
+
+
+var base64Decoded = CryptoJS.enc.Base64.parse(finalEncrypted);
+console.log("Base64 decoded", base64Decoded);
+
+var decrypted = decryptDesCbcPkcs7Padding(base64Decoded, "12345678");
+console.log("Decrypted: ", decrypted);
+
+var finalDecrypted = CryptoJS.enc.Base64.parse(decrypted.toString(CryptoJS.enc.Utf8)).toString(CryptoJS.enc.Utf8);
+console.log("Final decrypted: ", finalDecrypted);
+//alert("Final decrypted: " + finalDecrypted);
+document.getElementById("emessage").textContent = decrypted;
+}
+
+</script>
+
+<body>
+ <H1> HTML DES </H>
+  <div class="container">
+  <button id="button1" onclick="encrypt();">실행</button>
+  </div>
+ <h5>원본메시지  <div id="pmessage"></div> </h5>
+ <h5>암호메시지  <div id="emessage"></div> </h5>
+ 
+</body>
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white"><b>Copyright &copy; Sunstar 2019</b></p>
+  </div>
+</footer>
+</html>
+
+

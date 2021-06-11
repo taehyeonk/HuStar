@@ -1,0 +1,3 @@
+# JavaScriptHash
+SHA256
+ 
