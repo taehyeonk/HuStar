@@ -1,0 +1,65 @@
+<!-- 
+ index.html - QRCode
+ Author : Soto Jang (sotolabedu@gmail.com)
+ Copyright (c) Sunstar Since 2015. All Rights Reserved. See LICENSE file.
+ -->
+
+<!Doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="http://code.jquery.com/jquery-latest.js "></script>
+<script type="text/javascript" src="./js/qrcode.js"></script>
+
+<!-- bootsrtap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<title> HTML QRcode</title>
+
+<script>
+$(document).ready(function(){
+
+  let DEBUG = 1;
+
+  let qrcode = new QRCode(document.getElementById("qrcode"), {
+	width : 250,
+	height : 250
+  });
+
+  function makeCode () {		
+	let elText = document.getElementById("fromaddress");
+	
+	if (!elText.value) {
+		alert("Input a text");
+		elText.focus();
+		return;
+	}
+	qrcode.makeCode(elText.value);
+  } 
+  
+  $('#qrcodeBtn').on('click', function(){
+    if (DEBUG) console.log("qrcodeBtn...... ");
+	   makeCode();   
+    }) // end of txbuilder
+})
+</script>
+</head>
+
+<body>
+  <br>
+  <br>
+  <div class="container theme-showcase" role="main">
+    <h2><strong> Welcome to QR code </strong></h2>
+  	  <div id="tablePlace"></div>
+	  <button id="qrcodeBtn"> Create QRCode </button>
+  	  <h5>송신처  <input value="13isWyA23uSfTnGqRDM3n4famvybaQkL6B" id="fromaddress" size="45" placeholder=""></input> </h5>
+          <div id="message"></div>
+		  <div id="qrcode" style="width:250px; height:250px; margin-top:15px;"></div>
+  </div>
+<hr>
+  <div class="container">
+    <p class="m-0 text-center text-white"><b>Copyright &copy; Blocko 2019</b></p>
+  </div>
+</body>
+</html>

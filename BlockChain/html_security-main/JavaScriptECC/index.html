@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="jsrsasign : The 'jsrsasign' (RSA-Sign JavaScript Library) is a open source free pure JavaScript implementation of PKCS#1 v2.1 RSASSA-PKCS1-v1_5 RSA signing and validation algorithm." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/stylesheets/stylesheet.css">
+    <title>ECDSA sample</title>
+<script language="JavaScript" type="text/javascript" src="./js/jsrsasign-all-min.js"></script>
+<script language="JavaScript" type="text/javascript">
+function doGenerate() {
+  var f1 = document.form1;
+  var curve = f1.curve1.value;
+  var ec = new KJUR.crypto.ECDSA({"curve": curve});
+  var keypair = ec.generateKeyPairHex();
+  f1.prvkey1.value = keypair.ecprvhex;
+  f1.pubkey1.value = keypair.ecpubhex;
+}
+function doSign() {
+  var f1 = document.form1;
+  var prvkey = f1.prvkey1.value;
+  var curve = f1.curve1.value;
+  var sigalg = f1.sigalg1.value;
+  var msg1 = f1.msg1.value;
+  var sig = new KJUR.crypto.Signature({"alg": sigalg});
+  sig.init({d: prvkey, curve: curve});
+  sig.updateString(msg1);
+  var sigValueHex = sig.sign();
+  
+  f1.sigval1.value = sigValueHex;
+}
+function doVerify() {
+  var f1 = document.form1;
+  var pubkey = f1.pubkey1.value;
+  var curve = f1.curve1.value;
+  var sigalg = f1.sigalg1.value;
+  var msg1 = f1.msg1.value;
+  var sigval = f1.sigval1.value;
+  var sig = new KJUR.crypto.Signature({"alg": sigalg, "prov": "cryptojs/jsrsa"});
+  sig.init({xy: pubkey, curve: curve});
+  sig.updateString(msg1);
+  var result = sig.verify(sigval);
+  if (result) {
+    alert("valid ECDSA signature");
+  } else {
+    alert("invalid ECDSA signature");
+  }
+}
+</script>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <h1 id="project_title">ECDSA sample</h1>
+          <h2 id="project_tagline">generating EC keypair, signing and verifying ECDSA signature</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+<!-- now editing -->
+<form name="form1">
+<h4>(Step1) choose supported EC curve name and generate key pair</h4>
+ECC curve name: 
+<select name="curve1">
+<option value="secp256r1">secp256r1 (= NIST P-256, P-256, prime256v1)
+<option value="secp256k1">secp256k1
+<option value="secp384r1">secp384r1 (= NIST P-384, P-384)
+</select><br/>
+<input type="button" value="generate EC key pair" onClick="doGenerate();"/><br/>
+<p>
+EC private key (hex): <input type="text" name="prvkey1" value="" size="100"/><br/>
+EC public key (hex): <input type="text" name="pubkey1" value="" size="100"/><br/>
+</p>
+
+<!-- ============================================================== -->
+
+<h4>(Step2) Sign message</h4>
+Signature Algorithm: 
+<select name="sigalg1">
+<option value="SHA256withECDSA">SHA256withECDSA
+<option value="SHA1withECDSA">SHA1withECDSA
+</select><br/>
+
+Message string to be signed: 
+<input type="text" name="msg1" value="aaa" size="100"/><br/>
+<input type="button" value="sign message" onClick="doSign();"/><br/>
+<p>
+Signature value (hex): <input type="text" name="sigval1" value="" size="100"/><br/>
+</p>
+
+<h4>(Step3) Verify signature</h4>
+<input type="button" value="verify it!" onClick="doVerify();"/>
+<input type="reset" value="reset"/>
+
+</form>
+
+
+<!-- now editing -->
+
+      </section>
+    </div>
+
+  </body>
+</html>
