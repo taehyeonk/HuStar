@@ -5,4 +5,4 @@ OpenCV를 활용한 toy project
 
 "Python", "OpenCV", "Dlib", "Kivy"  
 
-Notion 링크 : https://www.notion.so/hustar33/Hunow-098f0f28204943c3b79fd040ea1955fb  
+Notion 링크 : https://heavy-freedom-32e.notion.site/Hunow-3dd6bd004e764448a918d134c0c96f68  
